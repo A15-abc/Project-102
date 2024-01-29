@@ -1,0 +1,517 @@
+import mysql.connector
+import random
+
+# Function to connect to the MySQL database
+def connect_to_database():
+    db = mysql.connector.connect(
+        host="localhost",
+        user="your_username",
+        password="your_password",
+        database="game_scores"
+    )
+    return db
+# Function to display the menu options
+def display_menu():
+    print("Menu:")
+    print("1. Rock-Paper-Scissors")
+    print("2.Hill climbing game ")
+    print("3. Number Guessing Game")
+    print("4. Hangman")
+    print("5. Snake and Ladder")
+    print("6. Tic Tac Toe")
+    print("7. Memory Game")
+# Main function to run the program
+def main():
+    db = connect_to_database()
+    cursor = db.cursor()
+    create_scores_table(cursor)
+
+    while True:
+        display_menu()
+        choice = input("Enter your choice (1-6): ")
+
+        if choice == '1':
+            import mysql.connector
+            import random
+
+            # Function to connect to the MySQL database
+            def connect_to_database():
+                db = mysql.connector.connect(
+                host="localhost",
+                user="your_username",
+                password="your_password",
+                database="game_scores"
+                )
+                return db
+
+            # Function to create the table for storing game scores
+            def create_scores_table(cursor):
+                cursor.execute("CREATE TABLE IF NOT EXISTS scores (game VARCHAR(255), result VARCHAR(255))")
+
+            # Function to insert a score into the scores table
+            def insert_score(cursor, game, result):
+                query = "INSERT INTO scores (game, result) VALUES (%s, %s)"
+                values = (game, result)
+                cursor.execute(query, values)
+                cursor.connection.commit()
+
+            # Function to play the Rock-Paper-Scissors game
+            def play_rock_paper_scissors():
+                choices = ["Rock", "Paper", "Scissors"]
+                player_choice = input("Enter your choice (Rock/Paper/Scissors): ").capitalize()
+
+                while player_choice not in choices:
+                    print("Invalid choice! Please try again.")
+                    player_choice = input("Enter your choice (Rock/Paper/Scissors): ").capitalize()
+
+                computer_choice = random.choice(choices)
+
+                print(f"Computer chose {computer_choice}")
+
+                if player_choice == computer_choice:
+                    print("It's a tie!")
+                    return "Tie"
+                elif (player_choice == "Rock" and computer_choice == "Scissors") or \
+                    (player_choice == "Paper" and computer_choice == "Rock") or \
+                    (player_choice == "Scissors" and computer_choice == "Paper"):
+                    print("You win!")
+                    return "Win"
+                else:
+                    print("Computer wins!")
+                    return "Lose"
+
+            # Main function to run the program
+            def main():
+                db = connect_to_database()
+                cursor = db.cursor()
+                create_scores_table(cursor)
+
+                while True:
+                    winner = play_rock_paper_scissors()
+                    insert_score(cursor, "Rock-Paper-Scissors", winner)
+
+                    choice = input("Do you want to play again? (y/n): ")
+                    if choice.lower() != "y":
+                        break
+
+                cursor.close()
+                db.close()
+                print("Program terminated.")
+
+            if __name__ == "__main__":
+                main()
+        elif choice == '2':
+            import mysql.connector
+
+            # Function to connect to the MySQL database
+            def connect_to_database():
+                db = mysql.connector.connect(
+                host="localhost",
+                user="your_username",
+                password="your_password",
+                database="game_scores"
+                )
+                return db
+            # Function to create the table for storing game scores
+            def create_scores_table(cursor):
+                cursor.execute("CREATE TABLE IF NOT EXISTS scores (game VARCHAR(255), result VARCHAR(255))")
+
+            # Function to insert a score into the scores table
+            def insert_score(cursor, game, result):
+                query = "INSERT INTO scores (game, result) VALUES (%s, %s)"
+                values = (game, result)
+                cursor.execute(query, values)
+                cursor.connection.commit()
+            # Function to play the hill climbing game
+            def play_hill_climbing_game():
+                score = 0
+                position = 0
+
+                while position < 100:
+                    print("Current position:", position)
+                    climb = input("Climb up? (yes/no): ").lower()
+
+                    if climb == "yes":
+                        score += 10
+                        position += 10
+                    else:
+                        score -= 5
+                        position -= 5
+
+                    if score < 0:
+                        score = 0
+
+                print("Congratulations! You reached the top of the hill.")
+                return score
+            # Main function to run the program
+            def main():
+                db = connect_to_database()
+                cursor = db.cursor()
+                create_scores_table(cursor)
+
+                score = play_hill_climbing_game()
+                insert_score(cursor, "Hill Climbing Game", str(score))
+
+                cursor.close()
+                db.close()
+                print("Program terminated.")
+
+            if __name__ == "__main__":
+                main()
+        elif choice == '3':
+            import mysql.connector
+            import random
+
+            # Function to connect to the MySQL database
+            def connect_to_database():
+                db = mysql.connector.connect(
+                host="localhost",
+                user="your_username",
+                password="your_password",
+                database="game_scores"
+                )
+                return db
+            # Function to create the table for storing game scores
+            def create_scores_table(cursor):
+                cursor.execute("CREATE TABLE IF NOT EXISTS scores (game VARCHAR(255), result VARCHAR(255))")
+
+            # Function to insert a score into the scores table
+            def insert_score(cursor, game, result):
+                query = "INSERT INTO scores (game, result) VALUES (%s, %s)"
+                values = (game, result)
+                cursor.execute(query, values)
+                cursor.connection.commit()
+            # Function to play the number guessing game
+            def play_number_guessing_game():
+                secret_number = random.randint(1, 100)
+                attempts = 0
+
+                print("Welcome to the Number Guessing Game!")
+                print("Guess a number between 1 and 100.")
+
+                while True:
+                    guess = int(input("Enter your guess: "))
+                    attempts += 1
+
+                    if guess == secret_number:
+                        print(f"Congratulations! You guessed the secret number {secret_number} in {attempts} attempts.")
+                        return attempts
+                    elif guess < secret_number:
+                        print("Try a higher number.")
+                    else:
+                        print("Try a lower number.")
+            # Main function to run the program
+            def main():
+                db = connect_to_database()
+                cursor = db.cursor()
+                create_scores_table(cursor)
+
+                attempts = play_number_guessing_game()
+                insert_score(cursor, "Number Guessing Game", str(attempts))
+
+                cursor.close()
+                db.close()
+                print("Program terminated.")
+
+            if __name__ == "__main__":
+                main()
+        elif choice == '4':
+            import mysql.connector
+            import random
+
+            # Function to connect to the MySQL database
+            def connect_to_database():
+                db = mysql.connector.connect(
+                host="localhost",
+                user="your_username",
+                password="your_password",
+                database="game_scores"
+                )
+                return db
+            # Function to create the table for storing game scores
+            def create_scores_table(cursor):
+                cursor.execute("CREATE TABLE IF NOT EXISTS scores (game VARCHAR(255), result VARCHAR(255))")
+
+            # Function to insert a score into the scores table
+            def insert_score(cursor, game, result):
+                query = "INSERT INTO scores (game, result) VALUES (%s, %s)"
+                values = (game, result)
+                cursor.execute(query, values)
+                cursor.connection.commit()
+            # Function to choose a random word from the list
+            def choose_word():
+                words = ["hangman", "python", "computer", "programming", "random", "database"]
+                return random.choice(words)
+
+            # Function to play the Hangman game
+            def play_hangman():
+                word = choose_word()
+                guessed_letters = set()
+                attempts = 6
+
+                while attempts > 0:
+                    display_word = "".join(letter if letter in guessed_letters else "-" for letter in word)
+                    print("Current word:", display_word)
+
+                    guess = input("Guess a letter: ").lower()
+
+                    if guess in guessed_letters:
+                        print("You already guessed that letter.")
+                    else:
+                        guessed_letters.add(guess)
+
+                        if guess not in word:
+                            attempts -= 1
+                            print(f"Wrong guess! Attempts left: {attempts}")
+
+                    if all(letter in guessed_letters for letter in word):
+                        print(f"Congratulations! You guessed the word '{word}' correctly!")
+                        return True
+
+                print(f"Sorry, you ran out of attempts. The word was '{word}'.")
+                return False
+            # Main function to run the program
+            def main():
+                db = connect_to_database()
+                cursor = db.cursor()
+                create_scores_table(cursor)
+
+                result = "Win" if play_hangman() else "Lose"
+                insert_score(cursor, "Hangman", result)
+
+                cursor.close()
+                db.close()
+                print("Program terminated.")
+
+            if __name__ == "__main__":
+                main()
+        elif choice == '5':
+            import random
+
+            # Function to simulate a dice roll
+            def roll_dice():
+                return random.randint(1, 6)
+
+            # Function to check if a ladder or snake is encountered
+            def check_ladder_snake(position):
+                ladders = {3: 22, 8: 30, 17: 39, 19: 58, 27: 77, 37: 43, 50: 91, 54: 88, 61: 99}
+                snakes = {24: 5, 33: 11, 42: 3, 56: 48, 63: 17, 69: 31, 80: 39, 87: 24, 93: 35, 98: 13}
+
+                if position in ladders:
+                    print("Climbing up the ladder!")
+                    return ladders[position]
+                elif position in snakes:
+                    print("Encountered a snake!")
+                    return snakes[position]
+                else:
+                    return position
+            # Function to play the snake and ladder game
+            def play_snake_and_ladder():
+                position = 0
+                moves = 0
+
+                while position < 100:
+                    moves += 1
+                    print("Number of moves:", moves)
+
+                    dice_roll = roll_dice()
+                    print("Dice roll:", dice_roll)
+
+                    position += dice_roll
+                    print("Current position:", position)
+
+                    if position > 100:
+                        position = 100 - (position - 100)
+        
+                    position = check_ladder_snake(position)
+
+                    print()
+
+                print("Congratulations! You reached 100 in", moves, "moves.")
+
+                cursor.close()
+                db.close()
+                print("Program terminated.")
+
+            if __name__ == "__main__":
+                main()
+        elif choice == '6':
+            import mysql.connector
+            import random
+
+            # Initialize MySQL connection
+            db = mysql.connector.connect(
+            host="localhost",
+            user="username",
+            password="password",
+            database="word_guessing_game"
+            )
+            cursor = db.cursor()
+
+            # Define the list of words for the game
+            word_list = ["apple", "banana", "cherry", "grape", "orange", "pear", "pineapple", "strawberry", "watermelon"]
+
+            # Define game logic functions
+            def select_random_word():
+                return random.choice(word_list)
+
+            def calculate_score(attempts):
+                return max(10 - attempts, 0)
+
+            def insert_game_score(player_name, score):
+                sql = "INSERT INTO game_scores (player_name, score) VALUES (%s, %s)"
+                values = (player_name, score)
+                cursor.execute(sql, values)
+                db.commit()
+
+            # Main game loop
+            def main():
+                player_name = input("Enter your name: ")
+                random_word = select_random_word()
+                guessed_word = "-" * len(random_word)
+                max_attempts = 6
+                attempts = 0
+
+                while guessed_word != random_word and attempts < max_attempts:
+                    print("Current word:", guessed_word)
+                    guess = input("Guess a letter or the entire word: ").lower()
+
+                    if len(guess) == 1:
+                        if guess in random_word:
+                            for i, letter in enumerate(random_word):
+                                if letter == guess:
+                                    guessed_word = guessed_word[:i] + guess + guessed_word[i + 1:]
+                        else:
+                            print("Incorrect guess!")
+                            attempts += 1
+                    else:
+                        if guess == random_word:
+                            guessed_word = guess
+                        else:
+                            print("Incorrect guess!")
+                            attempts += 1
+
+                score = calculate_score(attempts)
+                insert_game_score(player_name, score)
+
+                cursor.close()
+                db.close()
+
+            if __name__ == "__main__":
+                main()
+        elif choice =='7':
+            import mysql.connector
+            import random
+
+            # Function to connect to the MySQL database
+            def connect_to_database():
+                db = mysql.connector.connect(
+                    host="localhost",
+                    user="your_username",
+                    password="your_password",
+                    database="game_scores"
+                )
+                return db
+
+            # Function to create the table for storing game scores
+            def create_scores_table(cursor):
+                cursor.execute("CREATE TABLE IF NOT EXISTS scores (game VARCHAR(255), result INT)")
+
+            # Function to insert a score into the scores table
+            def insert_score(cursor, game, result):
+                query = "INSERT INTO scores (game, result) VALUES (%s, %s)"
+                values = (game, result)
+                cursor.execute(query, values)
+                cursor.connection.commit()
+
+            # Function to create the memory game board
+            def create_board(size):
+                symbols = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                random.shuffle(symbols)
+                board = [symbols[i:i + size] for i in range(0, size*size, size)]
+                return board
+
+            # Function to display the game board
+            def display_board(board, revealed):
+                for row in range(len(board)):
+                    for col in range(len(board[row])):
+                        if revealed[row][col]:
+                            print(board[row][col], end=" ")
+                        else:
+                            print("*", end=" ")
+                    print()
+
+            # Function to check if the game is over
+            def is_game_over(revealed):
+                for row in revealed:
+                    if False in row:
+                        return False
+                return True
+
+            # Main function to play the memory game
+            def play_memory_game():
+                size = 4  # Change the size as per your preference (even number only)
+                board = create_board(size)
+                revealed = [[False] * size for _ in range(size)]
+                attempts = 0
+
+                while not is_game_over(revealed):
+                    display_board(board, revealed)
+
+                    print("Enter the row and column (e.g., 1 2):")
+                    row1, col1 = map(int, input().split())
+
+                    if not 1 <= row1 <= size or not 1 <= col1 <= size:
+                        print("Invalid input. Try again.")
+                        continue
+
+                    if revealed[row1 - 1][col1 - 1]:
+                        print("This card is already revealed. Try again.")
+                        continue
+
+                    revealed[row1 - 1][col1 - 1] = True
+                    display_board(board, revealed)
+
+                    print("Enter the row and column of the second card:")
+                    row2, col2 = map(int, input().split())
+
+                    if not 1 <= row2 <= size or not 1 <= col2 <= size:
+                        print("Invalid input. Try again.")
+                        continue
+
+                    if revealed[row2 - 1][col2 - 1]:
+                        print("This card is already revealed. Try again.")
+                        continue
+
+                    revealed[row2 - 1][col2 - 1] = True
+                    display_board(board, revealed)
+
+                    if board[row1 - 1][col1 - 1] != board[row2 - 1][col2 - 1]:
+                        revealed[row1 - 1][col1 - 1] = False
+                        revealed[row2 - 1][col2 - 1] = False
+                    else:
+                        print("You found a pair!")
+
+                    attempts += 1
+
+                print("Congratulations! You completed the memory game in", attempts, "attempts.")
+                return attempts
+
+            # Main function to run the program
+            def main():
+                db = connect_to_database()
+                cursor = db.cursor()
+                create_scores_table(cursor)
+
+                attempts = play_memory_game()
+                insert_score(cursor, "Memory Game", attempts)
+
+                cursor.close()
+                db.close()
+                print("Program terminated.")
+
+            if __name__ == "__main__":
+                main()
+
+            else:
+                print("Invalid choice. Please try again.")
